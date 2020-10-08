@@ -5,19 +5,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import static org.testng.Assert.assertEquals;
+
 public class CartPage {
 
-    private static String cartPrice;
-    private static String cartName;
     private WebDriver driver;
-
-    public static String getCartPrice() {
-        return cartPrice;
-    }
-
-    public static String getCartName() {
-        return cartName;
-    }
 
     public CartPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -30,9 +22,14 @@ public class CartPage {
     @FindBy(xpath = "//td[@class='cart_description']//p//a")
     private WebElement cartNameElement;
 
-    public void getCartPriceAndName(){
-        cartName = cartNameElement.getText();
-        cartPrice = cartPriceElement.getText();
+    public CartPage checkCartName(String expectedName) {
+        assertEquals(expectedName, cartNameElement.getText());
+        return this;
+    }
+
+    public CartPage checkCartPrice(String expectedName) {
+        assertEquals(expectedName, cartPriceElement.getText());
+        return this;
     }
 
 }

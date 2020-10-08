@@ -7,29 +7,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
+import static org.testng.Assert.assertTrue;
+
 public class SearchResultPage {
-
-    private static String productName;
-    private static String productPrice;
-    private static boolean isOrdered;
-
-    public static String getProductName() {
-        return productName;
-    }
-
-    public static String getProductPrice() {
-        return productPrice;
-    }
-
-    public static boolean isIsOrdered() {
-        return isOrdered;
-    }
 
     private WebDriver driver;
 
@@ -44,7 +29,7 @@ public class SearchResultPage {
 
     @FindBy(xpath = "//ul[contains(@class, 'product_list')]"
             + "//div[@class='product-container']")
-    private List<WebElement> productsList;
+    private static List<WebElement> productsList;
 
     public SearchResultPage applyDescSorting() {
         Waiter.waitFor(2000);
@@ -57,22 +42,22 @@ public class SearchResultPage {
     }
 
     public SearchResultPage checkPriceSorting() {
-        isOrdered = PriceOrderChecker.isDescOrdered(productsList);
+        assertTrue(PriceOrderChecker.isDescOrdered(productsList));
         return this;
     }
 
-    //    WebElement addToCartButton = firstProductInTheList.findElement(By.xpath(
-    //            ".//a[contains (@class, 'ajax_add_to_cart_button')]"));
 
-    public SearchResultPage storeNameAndPrice() {
+    public String storeName() {
         String productNameXpath = ".//a[@class='product-name']";
+        return productsList.get(0)
+                .findElement(By.xpath(productNameXpath)).getText();
+    }
+
+    public static String storePrice() {
         String productPriceXpath = ".//div[./p[@class='product-desc']]"
                 + "//span[@class='price product-price']";
-        productName = productsList.get(0)
-                .findElement(By.xpath(productNameXpath)).getText();
-        productPrice = productsList.get(0)
+        return productsList.get(0)
                 .findElement(By.xpath(productPriceXpath)).getText();
-        return this;
     }
 
     public SearchResultPage clickAddToCart() {

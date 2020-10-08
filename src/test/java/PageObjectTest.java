@@ -5,15 +5,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import org.testng.annotations.*;
-import pageobjects.CartPage;
 import pageobjects.HomePage;
 import pageobjects.SearchResultPage;
 
 import static io.github.bonigarcia.wdm.config.DriverManagerType.CHROME;
 
-public class PageObjectTest extends Assert {
+public class PageObjectTest {
 
     private static final Logger logger = LogManager
             .getLogger(PageObjectTest.class);
@@ -40,29 +38,33 @@ public class PageObjectTest extends Assert {
     }
 
     @AfterClass
-    public void destroy(){
-        driver.close();
+    public void destroy() {
+        driver.quit();
+    }
+
+    @AfterMethod
+    public void deleteCookies() {
+        driver.manage().deleteAllCookies();
     }
 
     @Test(dataProvider = "searchValues")
     public void testOne(String query) {
 
-        homePage.openHomePage()
-                .doSearchByQuery(query)
+        SearchResultPage searchResultPage = homePage.openHomePage()
+                .doSearchByQuery(query);
+
+        String expectedName = searchResultPage
                 .applyDescSorting()
                 .checkPriceSorting()
-                .storeNameAndPrice()
-                .clickAddToCart()
+                .storeName();
+
+        String expectedPrice = SearchResultPage
+                .storePrice();
+
+        searchResultPage.clickAddToCart()
                 .navigateToCart()
-                .getCartPriceAndName();
+        .checkCartName(expectedName)
+        .checkCartPrice(expectedPrice);
 
-        assertEquals(CartPage.getCartName(), SearchResultPage.getProductName());
-        logger.info("Comparison by name OK");
-        assertEquals(CartPage.getCartPrice(),
-                SearchResultPage.getProductPrice());
-        logger.info("Comparison by price OK");
-        assertTrue(SearchResultPage.isIsOrdered());
-
-        driver.manage().deleteAllCookies();
     }
 }
