@@ -1,0 +1,9 @@
+.idea
+seleniumproject.iml
+out
+/target/
+.classpath
+.project
+.settings
+.logs
+*.log
