@@ -35,12 +35,15 @@ public class RestTest extends Assert {
     }
 
     @Test(dataProvider = "urlValues")
-    public void checkServerResponseCode(String url) {
-        System.out.println(url);
-        Response resp = given().header("User-Agent", "Jmeter").get(url);
-        assertEquals(200, resp.statusCode());
-        assertTrue(resp.getContentType().contains("text/html"));
-        assertEquals(resp.getHeader("Content-Encoding"), "gzip");
+    public void checkServerResponseCode(String uri){
+        given()
+                .when()
+                .header("User-Agent", "Jmeter")
+                .get(uri)
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .contentType("text/html")
+                .header("Content-Encoding", "gzip");
     }
-
 }
