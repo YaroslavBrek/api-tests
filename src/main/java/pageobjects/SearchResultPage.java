@@ -53,7 +53,7 @@ public class SearchResultPage {
                 .findElement(By.xpath(productNameXpath)).getText();
     }
 
-    public static String storePrice() {
+    public String storePrice() {
         String productPriceXpath = ".//div[./p[@class='product-desc']]"
                 + "//span[@class='price product-price']";
         return productsList.get(0)

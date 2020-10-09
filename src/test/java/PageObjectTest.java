@@ -58,7 +58,7 @@ public class PageObjectTest {
                 .checkPriceSorting()
                 .storeName();
 
-        String expectedPrice = SearchResultPage
+        String expectedPrice = searchResultPage
                 .storePrice();
 
         searchResultPage.clickAddToCart()
