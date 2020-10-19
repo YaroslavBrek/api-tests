@@ -1,20 +1,11 @@
 import helpers.FileLoader;
-import io.restassured.response.Response;
-import org.apache.logging.log4j.core.util.JsonUtils;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 
 public class RestTest extends Assert {
     private static Object[] data;

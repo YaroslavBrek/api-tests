@@ -29,7 +29,7 @@ public class SearchResultPage {
 
     @FindBy(xpath = "//ul[contains(@class, 'product_list')]"
             + "//div[@class='product-container']")
-    private static List<WebElement> productsList;
+    private List<WebElement> productsList;
 
     public SearchResultPage applyDescSorting() {
         Waiter.waitFor(2000);
