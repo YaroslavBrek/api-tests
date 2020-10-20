@@ -1,15 +1,15 @@
 package atlaspages.pages;
 
-import io.qameta.atlas.webdriver.AtlasWebElement;
+import atlaspages.elements.Header;
+import atlaspages.elements.HtmlElement;
 import io.qameta.atlas.webdriver.WebPage;
-import org.openqa.selenium.WebElement;
 import io.qameta.atlas.webdriver.extension.FindBy;
 
-public interface CartPage extends WebPage {
+public interface CartPage extends WebPage, Header {
 
     @FindBy("//td[@class='cart_total']/span")
-    AtlasWebElement cartPriceElement();
+    HtmlElement cartPriceElement();
 
     @FindBy("//td[@class='cart_description']//p//a")
-    AtlasWebElement cartNameElement();
+    HtmlElement cartNameElement();
 }

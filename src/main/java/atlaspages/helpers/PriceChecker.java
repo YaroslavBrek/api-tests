@@ -1,23 +1,27 @@
-package helpers;
+package atlaspages.helpers;
 
+import atlaspages.elements.HtmlElement;
+import atlaspages.elements.ProductItem;
+import io.qameta.atlas.webdriver.ElementsCollection;
+import io.qameta.atlas.webdriver.extension.FindBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PriceOrderChecker {
+public class PriceChecker {
 
-    public static boolean isDescOrdered(List<WebElement> productsList){
+    public static boolean isDescOrdered(
+            ElementsCollection<ProductItem> productsList){
 
-        String oldPriceXpath = ".//div[./p[@class='product-desc']]"
-                + "//span[contains(@class, 'old-price')]";
-        String currentPriceXpath = ".//div[./p[@class='product-desc']]"
-                + "//span[@class='price product-price']";
+        String oldPriceXpath = ".//div[./p[@class='product-desc']]//span[contains(@class, 'old-price')]";
+        String currentPriceXpath = ".//div[./p[@class='product-desc']]//span[@class='price product-price']";
 
         List<String> prices = new ArrayList<String>();
 
-        for (WebElement ele : productsList) {
+        //Store all ordered prices
+        for (ProductItem ele : productsList) {
             try {
                 prices.add(ele.findElement(By.xpath(oldPriceXpath)).getText());
             } catch (org.openqa.selenium.NoSuchElementException e) {

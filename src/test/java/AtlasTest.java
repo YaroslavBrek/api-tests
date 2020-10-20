@@ -1,7 +1,8 @@
+import atlaspages.helpers.PriceChecker;
+import atlaspages.modals.AddToCartModal;
 import atlaspages.pages.CartPage;
 import atlaspages.pages.HomePage;
 import atlaspages.pages.SearchPage;
-import helpers.PriceOrderChecker;
 import interfaces.PropertyLoader;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.atlas.core.Atlas;
@@ -21,7 +22,7 @@ public class AtlasTest {
     public static Object[] searchValues() {
         return new String[] { "Summer", "Dress", "t-shirt" };
     }
-    private ChromeOptions chromeOptions;
+
     private WebDriver driver;
     private Atlas atlas;
 
@@ -31,7 +32,7 @@ public class AtlasTest {
     @BeforeClass
     public void initialize() {
         WebDriverManager.chromedriver().setup();
-        chromeOptions = new ChromeOptions();
+        ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("disable-gpu");
         driver = new ChromeDriver(chromeOptions);
         atlas = new Atlas(new WebDriverConfiguration(driver));
@@ -41,24 +42,47 @@ public class AtlasTest {
     public void testOne(String query) {
 
         onHomePage().open(config.getUrl());
-        onHomePage().header().searchInput().sendKeys(query);
-        onHomePage().header().searchInput().submit();
+        onHomePage().header()
+                .searchInput()
+                .sendKeys(query);
+        onHomePage().header()
+                .searchInput()
+                .submit();
 
-        onSearchPage().priceSortingDropdown().optionByName("Price: Highest first").click();
+        onSearchPage()
+                .priceSortingDropdown()
+                .optionByName("Price: Highest first")
+                .click();
 
-//        onSearchPage().productSortDropdown().click();
-//        onSearchPage().selectPriceSoring().click();
+        String expectedName = onSearchPage()
+                .items()
+                .get(0)
+                .expectedName()
+                .getText();
+        String expectedPrice = onSearchPage()
+                .items()
+                .get(0)
+                .expectedPrice()
+                .getText();
+        onSearchPage()
+                .items()
+                .get(0)
+                .addToCart()
+                .click();
 
-        assertTrue(PriceOrderChecker.isDescOrdered(onSearchPage().items()));
+        assertTrue(PriceChecker.isDescOrdered(onSearchPage().items()));
 
-        String expectedName = onSearchPage().expectedName().getText();
-        String expectedPrice = onSearchPage().expectedPrice().getText();
+        onAddToCartModal()
+                .navigateToCheckout()
+                .click();
 
-        onSearchPage().addToCart().click();
-        onSearchPage().navigateToCheckout().click();
+        String cartPrice = onCartPage()
+                .cartPriceElement()
+                .getText();
 
-        String cartPrice = onCartPage().cartPriceElement().getText();
-        String cartName = onCartPage().cartNameElement().getText();
+        String cartName = onCartPage()
+                .cartNameElement()
+                .getText();
 
         assertEquals(cartName, expectedName);
         assertEquals(cartPrice, expectedPrice);
@@ -75,6 +99,10 @@ public class AtlasTest {
 
     private CartPage onCartPage() {
         return onPage(CartPage.class);
+    }
+
+    private AddToCartModal onAddToCartModal() {
+        return onPage(AddToCartModal.class);
     }
 
     private <T extends WebPage> T onPage(Class<T> page) {
