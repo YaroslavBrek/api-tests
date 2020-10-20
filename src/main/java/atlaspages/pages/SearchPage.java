@@ -1,12 +1,12 @@
 package atlaspages.pages;
 
+import atlaspages.elements.Select;
 import io.qameta.atlas.core.Atlas;
 import io.qameta.atlas.webdriver.AtlasWebElement;
 import io.qameta.atlas.webdriver.ElementsCollection;
 import io.qameta.atlas.webdriver.WebPage;
 import io.qameta.atlas.webdriver.extension.FindBy;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 
 import java.awt.*;
 import java.util.List;
@@ -19,8 +19,12 @@ public interface SearchPage extends WebPage {
     @FindBy("//option[@value='price:desc']")
     AtlasWebElement selectPriceSoring();
 
+    @FindBy("//select[@id='selectProductSort']")
+    Select priceSortingDropdown();
+
     @FindBy("//form[@id='productsSortForm']")
     AtlasWebElement productSortDropdown();
+
 
     @FindBy("//li[contains(@class, 'ajax_block_product')][1]//a[@class='product-name']")
     AtlasWebElement expectedName();

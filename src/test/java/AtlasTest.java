@@ -9,6 +9,7 @@ import io.qameta.atlas.webdriver.WebDriverConfiguration;
 import io.qameta.atlas.webdriver.WebPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.*;
 
 import static org.testng.Assert.assertEquals;
@@ -20,7 +21,7 @@ public class AtlasTest {
     public static Object[] searchValues() {
         return new String[] { "Summer", "Dress", "t-shirt" };
     }
-
+    private ChromeOptions chromeOptions;
     private WebDriver driver;
     private Atlas atlas;
 
@@ -30,17 +31,23 @@ public class AtlasTest {
     @BeforeClass
     public void initialize() {
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+        chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("disable-gpu");
+        driver = new ChromeDriver(chromeOptions);
         atlas = new Atlas(new WebDriverConfiguration(driver));
     }
 
     @Test(dataProvider = "searchValues")
     public void testOne(String query) {
+
         onHomePage().open(config.getUrl());
         onHomePage().header().searchInput().sendKeys(query);
         onHomePage().header().searchInput().submit();
-        onSearchPage().productSortDropdown().click();
-        onSearchPage().selectPriceSoring().click();
+
+        onSearchPage().priceSortingDropdown().optionByName("Price: Highest first").click();
+
+//        onSearchPage().productSortDropdown().click();
+//        onSearchPage().selectPriceSoring().click();
 
         assertTrue(PriceOrderChecker.isDescOrdered(onSearchPage().items()));
 
