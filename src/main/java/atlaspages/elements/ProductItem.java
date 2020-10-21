@@ -13,4 +13,10 @@ public interface ProductItem extends AtlasWebElement<ProductItem> {
 
     @FindBy(".//a[contains(@class, 'ajax_add_to_cart_button')]")
     HtmlElement addToCart();
+
+    @FindBy(".//div[./p[@class='product-desc']]//span[contains(@class, 'old-price')]")
+    HtmlElement oldPrice();
+
+    @FindBy(".//div[./p[@class='product-desc']]//span[@class='price product-price']")
+    HtmlElement currentPrice();
 }

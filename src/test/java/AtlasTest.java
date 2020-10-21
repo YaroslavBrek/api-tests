@@ -1,5 +1,4 @@
 import atlaspages.helpers.PriceChecker;
-import atlaspages.modals.AddToCartModal;
 import atlaspages.pages.CartPage;
 import atlaspages.pages.HomePage;
 import atlaspages.pages.SearchPage;
@@ -59,11 +58,13 @@ public class AtlasTest {
                 .get(0)
                 .expectedName()
                 .getText();
+
         String expectedPrice = onSearchPage()
                 .items()
                 .get(0)
                 .expectedPrice()
                 .getText();
+
         onSearchPage()
                 .items()
                 .get(0)
@@ -72,7 +73,7 @@ public class AtlasTest {
 
         assertTrue(PriceChecker.isDescOrdered(onSearchPage().items()));
 
-        onAddToCartModal()
+        onSearchPage().addToCartModal()
                 .navigateToCheckout()
                 .click();
 
@@ -101,9 +102,6 @@ public class AtlasTest {
         return onPage(CartPage.class);
     }
 
-    private AddToCartModal onAddToCartModal() {
-        return onPage(AddToCartModal.class);
-    }
 
     private <T extends WebPage> T onPage(Class<T> page) {
         return atlas.create(driver, page);
