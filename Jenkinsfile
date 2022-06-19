@@ -7,9 +7,9 @@ pipeline {
     stages {
             stage('Clone repository and run CRUD app') {
                 steps {
-                        git credentialsId: 'c22e2e1e-3a86-4013-ba41-08bf5b0a1c55', url: 'https://gitlab.nixdev.co/brek/jenkinstraininng.git'
-                        sh 'mvn spring-boot:run'
-                        sh 'mvn spring-boot:stop'
+                        git credentialsId: 'bcd6779b-7a8b-4d36-8687-c3098977aab6', url: 'https://gitlab.nixdev.co/brek/selenium.git'
+                        sh 'docker build -t app .'
+                        sh 'docker run -d -p 9000:9000 app'
                 }
             }
             stage('Run tests against CRUD app') {
