@@ -12,9 +12,10 @@ pipeline {
                         sh 'docker run -d -p 9000:9000 app'
                 }
             }
-            stage ("Wait until app is up")
-            {
+            stage ("Wait until app is up"){
+                 steps {
                sh 'sleep 20'
+                }
             }
             stage('Run tests against CRUD app') {
                 steps {
