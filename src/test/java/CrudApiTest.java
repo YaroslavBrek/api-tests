@@ -13,7 +13,7 @@ public class CrudApiTest extends Assert {
   public void getUsers() {
     given()
         .when()
-        .get("http://localhost:9000/user/")
+        .get("http://127.0.0.1:9000/user/")
         .then()
         .assertThat()
         .statusCode(200)
