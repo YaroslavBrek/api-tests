@@ -14,7 +14,7 @@ pipeline {
             }
             stage ("Wait until app is up"){
                  steps {
-               sh 'sleep 20'
+                        sh 'sleep 20'
                 }
             }
             stage('Run tests against CRUD app') {
