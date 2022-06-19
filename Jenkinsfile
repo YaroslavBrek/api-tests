@@ -9,7 +9,7 @@ pipeline {
                 steps {
                         git credentialsId: 'f532c764-fab8-4854-8b57-029c5240dca9', url: 'https://gitlab.nixdev.co/brek/jenkinstraininng.git'
                         sh 'docker build -t app .'
-                        sh 'docker run -d -p 9000:9000 app'
+                        sh 'docker run -d --network=my-bridge-network -p 9000:9000 app'
                 }
             }
             stage ("Wait until app is up"){
