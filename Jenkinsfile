@@ -10,7 +10,8 @@ pipeline {
             steps {
                 sh 'docker run \
                 --network "external-api" \
-                --publish 9001:9001 \
+                --name "tests" \
+                -p 9001:9000 \
                 tests'
             }
         }

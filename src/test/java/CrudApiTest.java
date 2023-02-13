@@ -13,7 +13,7 @@ public class CrudApiTest extends Assert {
   public void getUsers() {
     given()
         .when()
-        .get("http://127.0.0.1:9000/user/")
+        .get("http://crud:9000/user/")
         .then()
         .assertThat()
         .statusCode(200)
@@ -24,7 +24,7 @@ public class CrudApiTest extends Assert {
   public void getSingleUser() {
     given()
         .when()
-        .get("http://localhost:9000/user/2")
+        .get("http://crud:9000/user/2")
         .then()
         .assertThat()
         .statusCode(SC_OK)
@@ -35,7 +35,7 @@ public class CrudApiTest extends Assert {
   public void getNotFoundError() {
     given()
         .when()
-        .get("http://localhost:9000/user/666")
+        .get("http://crud:9000/user/666")
         .then()
         .assertThat()
         .statusCode(SC_NOT_FOUND);
