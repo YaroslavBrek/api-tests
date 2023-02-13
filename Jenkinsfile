@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Run tests') {
             steps {
-                sh 'docker run --publish 9001:9001 tests'
+                sh 'docker run --network "external-api" --publish 9001:9001 tests'
             }
         }
     }
