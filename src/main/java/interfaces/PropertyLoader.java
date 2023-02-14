@@ -5,7 +5,11 @@ import ru.qatools.properties.Resource;
 
 @Resource.Classpath("test.properties")
 public interface PropertyLoader {
-    @Property("site.url")
-    String getUrl();
+    @Property("envUrl")
+    String envUrl();
+    @Property("envPort")
+    String envPort();
+    @Property("baseUrl")
+    String baseUrl();
 }
 
