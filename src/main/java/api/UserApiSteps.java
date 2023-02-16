@@ -20,7 +20,7 @@ public class UserApiSteps {
                 .setBaseUri(getEnvUrl())
                 .setBasePath(USER_URI)
                 .build();
-        System.out.println("Your target URL is at: " + getEnvUrl() + "/n");
+        System.out.println("Your target URL is at: " + getEnvUrl());
     }
 
     @Step("GET /user/..")
