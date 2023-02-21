@@ -1,15 +1,12 @@
-import static api.ResponseExtractor.getBookFromResponse;
-import static api.ResponseExtractor.getBooksListFromResponse;
-import static org.apache.hc.core5.http.HttpStatus.SC_NOT_FOUND;
-import static org.apache.hc.core5.http.HttpStatus.SC_OK;
-
 import api.UserApiSteps;
 import api.entity.User;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import io.restassured.http.ContentType;
+import static api.ResponseExtractor.getBookFromResponse;
+import static org.apache.hc.core5.http.HttpStatus.SC_NOT_FOUND;
 
 public class CrudApiTest extends Assert {
     private UserApiSteps userApiSteps;
@@ -33,10 +30,10 @@ public class CrudApiTest extends Assert {
 
     @Test(groups = "api")
     public void getSingleUserWithIdEqualsTwo() {
-       Response response = onUserApi()
+        Response response = onUserApi()
                 .sendGetUser("2");
-       User user = getBookFromResponse(response);
-       assertEquals(user.getId(), 2);
+        User user = getBookFromResponse(response);
+        assertEquals(user.getId(), 2);
     }
 
     @Test(groups = "api")
