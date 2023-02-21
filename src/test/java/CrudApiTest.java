@@ -1,7 +1,11 @@
+import static api.ResponseExtractor.getBookFromResponse;
+import static api.ResponseExtractor.getBooksListFromResponse;
 import static org.apache.hc.core5.http.HttpStatus.SC_NOT_FOUND;
 import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 
 import api.UserApiSteps;
+import api.entity.User;
+import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -18,7 +22,7 @@ public class CrudApiTest extends Assert {
     }
 
     @Test(groups = "api")
-    public void getUsers() {
+    public void getStatusCode200() {
         onUserApi()
                 .sendGetAllUsers()
                 .then()
@@ -28,13 +32,11 @@ public class CrudApiTest extends Assert {
     }
 
     @Test(groups = "api")
-    public void getSingleUser() {
-        onUserApi()
-                .sendGetUser("2")
-                .then()
-                .assertThat()
-                .statusCode(SC_OK)
-                .contentType(ContentType.JSON);
+    public void getSingleUserWithIdEqualsTwo() {
+       Response response = onUserApi()
+                .sendGetUser("2");
+       User user = getBookFromResponse(response);
+       assertEquals(user.getId(), 2);
     }
 
     @Test(groups = "api")
