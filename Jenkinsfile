@@ -3,7 +3,10 @@ pipeline {
     stages {
         stage('Build application') {
             steps {
-                sh 'docker build -t tests .'
+                sh 'docker build -t tests \
+                 --build-arg envUrl=crud \
+                 --build-arg envPort=9000 \
+                 --build-arg testGroup=api .'
             }
         }
         stage('Run tests') {
@@ -11,7 +14,6 @@ pipeline {
                 sh 'docker run \
                 --network "external-api" \
                 --name "tests" \
-                -v allure-results:/var/target/allure-results
                 -p 9001:9000 \
                 tests'
             }
