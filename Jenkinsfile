@@ -14,7 +14,7 @@ pipeline {
                 sh 'docker run \
                 --network "external-api" \
                 --name "tests" \
-                -p 9001:9000 \
+                -p 9090:9090 \
                 tests'
             }
         }
