@@ -25,6 +25,7 @@
         <jackson.core.version>2.14.0</jackson.core.version>
 
         <testng.threads.count>5</testng.threads.count>
+        <allure.report.port>9090</allure.report.port>
     </properties>
 
     <dependencies>
@@ -245,6 +246,9 @@
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
                 <version>${allure.maven.version}</version>
+                <configuration>
+                    <servePort>${allure.report.port}</servePort>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
