@@ -7,4 +7,4 @@ ARG testGroup
 ENV env_url $envUrl
 ENV env_port $envPort
 ENV test_group $testGroup
-CMD mvn clean test -Dgroups=$test_group -DenvUrl=$env_url -DenvPort=$env_port && mvn allure:report
+CMD mvn clean test -Dgroups=$test_group -DenvUrl=$env_url -DenvPort=$env_port && mvn allure:serve
