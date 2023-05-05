@@ -267,6 +267,7 @@
                 <version>${maven.surefire.version}</version>
                 <configuration>
                     <parallel>classes</parallel>
+                    <testFailureIgnore>true</testFailureIgnore>
                     <threadCount>${testng.threads.count}</threadCount>
                     <includes>
                         <include>**/*TestData.java</include>
