@@ -29,6 +29,16 @@ public class CrudApiTest extends Assert {
     }
 
     @Test(groups = "api")
+    public void getStatusCode200Duplicate() {
+        onUserApi()
+                .sendGetAllUsers()
+                .then()
+                .assertThat()
+                .statusCode(300)
+                .contentType(ContentType.JSON);
+    }
+
+    @Test(groups = "api")
     public void getSingleUserWithIdEqualsTwo() {
         Response response = onUserApi()
                 .sendGetUser("2");
